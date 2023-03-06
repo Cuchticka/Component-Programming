@@ -3,5 +3,6 @@ public class Main {
         var field = new Field(3, 3);
         var ui = new ConsoleUI(field);
         ui.play();
+
     }
 }
