@@ -11,11 +11,14 @@ public class Field {
 
     private int steps;
 
+    private boolean win;
+
     private FieldState state = FieldState.PLAYING;
     public int[][] tiles;
 
 
     public Field(int rowCount, int columnCount) {
+        win = true;
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         tiles = new int[rowCount][columnCount];
@@ -44,17 +47,22 @@ public class Field {
             int randcol1 = rand.nextInt(columnCount);
 
             if (tiles[randrow1][randcol1] != 0 && tiles[randrow][randcol] != 0) {
-                SwapTiles(randrow, randcol, randrow1, randcol1);
+                if(!win){
+                    SwapTiles(randrow, randcol, randrow1, randcol1);
+                }
+
             }
             steps = 0;
 
         }
 
-        /*
-        SwapTiles(rowCount-1,columnCount-1,rowCount-2,rowCount-1);
-        setEmptyRow(rowCount-2);
+        if(win){
+            SwapTiles(rowCount-1,columnCount-1,rowCount-2,rowCount-1);
+            setEmptyRow(rowCount-2);
+        }
 
-         */
+
+
     }
 
     public void SwapTiles(int row1, int col1, int row2, int col2) {
@@ -93,6 +101,14 @@ public class Field {
 
     public int getColumnCount() {
         return columnCount;
+    }
+
+    public void setColumnCount(int columnCount) {
+        this.columnCount = columnCount;
+    }
+
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
     }
 
     public int getRowCount() {

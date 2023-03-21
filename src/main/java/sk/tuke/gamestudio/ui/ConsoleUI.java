@@ -1,24 +1,39 @@
 package sk.tuke.gamestudio.ui;
 
 import sk.tuke.gamestudio.entity.Field;
+import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.services.ScoreService;
+import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
 import javax.sound.midi.Soundbank;
+import java.util.Date;
 import java.util.Scanner;
 
 public class ConsoleUI {
     private final Field field;
     private Scanner scanner = new Scanner(System.in);
     private int digits;
+    private boolean running;
+    private Date date = new Date();
+
+    private ScoreService scoreService = new ScoreServiceJDBC();
 
     public ConsoleUI(Field field) {
         this.field = field;
     }
 
+
     public void play() {
+        running = true;
         digits = String.valueOf(field.getColumnCount() * field.getRowCount()).length();
-        while (!field.isSolved()) {
+        int score = field.getColumnCount()* field.getRowCount()*100;
+        while (running) {
+            if(field.isSolved()){
+                running = false;
+                break;
+            }
             printField();
-            System.out.print("Enter command (W - UP, A - LEFT, S - DOWN, D - RIGHT, SHUFFLE - reset): ");
+            System.out.print("Enter command (W - UP, A - LEFT, S - DOWN, D - RIGHT, SHUFFLE - reset), E - exit: ");
             var line = scanner.nextLine().toUpperCase();
             switch (line) {
                 case "W":
@@ -56,16 +71,31 @@ public class ConsoleUI {
                     }
                     break;
                 case "SHUFFLE":
+                    score = field.getColumnCount()* field.getRowCount()*100;
                     field.shuffle();
+                    break;
+                case "E":
+                    running = false;
                     break;
                 default:
                     // code block
                     System.out.println("Please w,a,s,d");
             }
             System.out.println("steps: " + field.getSteps());
+            if(score!=0){
+                score = score-1;
+            }
+
+            System.out.println("score: " + score);
         }
-        printField();
-        System.out.println("VYHRAL SI CONGRATS");
+        if(field.isSolved()){
+            printField();
+            System.out.println("You won congratulations");
+            System.out.println("Your score: "+ score);
+            System.out.print("Import name ");
+            var name = scanner.nextLine();
+            scoreService.addScore(new Score( name,"sliding puzzle",score,date));
+        }
     }
 
     private void printField() {
