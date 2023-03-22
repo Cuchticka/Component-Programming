@@ -75,7 +75,7 @@ public class RatingServiceJDBC implements RatingService{
 
         }
         catch (SQLException e){
-            throw new CommentException("Problem getting average rating", e);
+            throw new RatingException("Problem getting average rating", e);
         }
 
     }
@@ -102,7 +102,7 @@ public class RatingServiceJDBC implements RatingService{
 
         }
         catch (SQLException e){
-            throw new CommentException("Problem getting rating", e);
+            throw new RatingException("Problem getting rating", e);
         }
     }
 
@@ -113,7 +113,7 @@ public class RatingServiceJDBC implements RatingService{
         ) {
             statement.executeUpdate(DELETE);
         } catch (SQLException e) {
-            throw new ScoreException("Problem deleting rating", e);
+            throw new RatingException("Problem deleting rating", e);
         }
     }
 }

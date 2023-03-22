@@ -50,7 +50,7 @@ public class CommentServiceJDBC implements CommentService{
                 return comments;
             }
         } catch (SQLException e) {
-            throw new ScoreException("Problem selecting comment", e);
+            throw new CommentException("Problem selecting comment", e);
         }
     }
 
@@ -61,7 +61,7 @@ public class CommentServiceJDBC implements CommentService{
         ) {
             statement.executeUpdate(DELETE);
         } catch (SQLException e) {
-            throw new ScoreException("Problem deleting comment", e);
+            throw new CommentException("Problem deleting comment", e);
         }
     }
 }
