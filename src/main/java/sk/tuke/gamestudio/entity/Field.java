@@ -18,7 +18,7 @@ public class Field {
 
 
     public Field(int rowCount, int columnCount) {
-        win = true;
+        win = false;
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         tiles = new int[rowCount][columnCount];
