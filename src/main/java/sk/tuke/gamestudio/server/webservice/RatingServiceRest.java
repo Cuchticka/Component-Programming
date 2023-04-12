@@ -23,7 +23,9 @@ public class RatingServiceRest {
     }
 
     @PostMapping
-    public void addComment(@RequestBody Rating rating) {
-        ratingService.setRating(rating);
+    public void setRating(@RequestBody Rating rating) {
+        if(rating.getRating()>=0){
+            ratingService.setRating(rating);
+        }
     }
 }
