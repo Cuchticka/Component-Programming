@@ -1,6 +1,11 @@
-package sk.tuke.gamestudio.entity;
+package sk.tuke.gamestudio.game;
+
+
+
+import org.springframework.stereotype.Component;
 
 import java.util.Random;
+
 
 public class Field {
 
@@ -18,13 +23,14 @@ public class Field {
 
 
     public Field(int rowCount, int columnCount) {
-        win = false;
+        win = true;
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         tiles = new int[rowCount][columnCount];
         shuffle();
 
     }
+
 
     public void shuffle() {
         int num = 1;

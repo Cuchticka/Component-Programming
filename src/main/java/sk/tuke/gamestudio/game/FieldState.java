@@ -1,4 +1,4 @@
-package sk.tuke.gamestudio.entity;
+package sk.tuke.gamestudio.game;
 
 public enum FieldState {
     PLAYING, SOLVED

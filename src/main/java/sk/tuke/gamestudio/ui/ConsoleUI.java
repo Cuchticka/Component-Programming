@@ -1,22 +1,36 @@
 package sk.tuke.gamestudio.ui;
 
-import sk.tuke.gamestudio.entity.Field;
+import org.springframework.beans.factory.annotation.Autowired;
+import sk.tuke.gamestudio.entity.Comment;
+import sk.tuke.gamestudio.entity.Rating;
+import sk.tuke.gamestudio.game.Field;
 import sk.tuke.gamestudio.entity.Score;
+import sk.tuke.gamestudio.services.CommentService;
+import sk.tuke.gamestudio.services.RatingService;
 import sk.tuke.gamestudio.services.ScoreService;
-import sk.tuke.gamestudio.services.ScoreServiceJDBC;
 
-import javax.sound.midi.Soundbank;
 import java.util.Date;
 import java.util.Scanner;
 
+
 public class ConsoleUI {
-    private final Field field;
+
     private Scanner scanner = new Scanner(System.in);
     private int digits;
     private boolean running;
-    private Date date = new Date();
+    public static final String game = "sliding_puzzle";
 
-    private ScoreService scoreService = new ScoreServiceJDBC();
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
+    @Autowired
+    private ScoreService scoreService ;
+    private Field field;
+
+    private static Date date = new Date();
+
+
 
     public ConsoleUI(Field field) {
         this.field = field;
@@ -94,7 +108,7 @@ public class ConsoleUI {
             System.out.println("Your score: "+ score);
             System.out.print("Import name ");
             var name = scanner.nextLine();
-            scoreService.addScore(new Score( name,"sliding puzzle",score,date));
+            scoreService.addScore(new Score( name,"sliding_puzzle",score,date));
         }
     }
 
@@ -184,4 +198,76 @@ public class ConsoleUI {
         }
         System.out.print("\u2550\u2550\u2550\u2557");
     }
+
+    public void menu(){
+        running = true;
+        while(running){
+            System.out.println("Welcome to Sliding puzzle.\nPick your choice:");
+            System.out.println(" 1. Play\n 2. Leaderboard\n 3. Comments\n 4. Write a comment\n 5. Rate the game\n 6. Exit");
+            System.out.println("Your choice: ");
+            var choice = scanner.nextLine();
+            switch (choice){
+                case "1":
+                    System.out.println("What size would you want to play. Must be at least 3x3 big.\nEnter rows: ");
+                    int rows = scanner.nextInt();
+                    if(rows<3){
+                        System.out.println("Too small. Must be at least 3");
+                        break;
+                    }
+                    System.out.println("Enter columns: ");
+                    int columns = scanner.nextInt();
+                    if(columns<3){
+                        System.out.println("Too small. Must be at least 3");
+                        break;
+                    }
+                    field.setColumnCount(columns);
+                    field.setRowCount(rows);
+                    play();
+                    break;
+                case "2":
+                    var scores = scoreService.getTopScores(game);
+                    for(int i=0; i<scores.size() ;i++){
+                        System.out.println(scoreService.getTopScores(game).get(i).getPlayer()
+                                + "- "
+                                + scoreService.getTopScores(game).get(i).getPoints()
+                                + " "
+                                + scoreService.getTopScores(game).get(i).getPlayedOn()
+                        );
+                    }
+                    System.out.println("\n");
+                    break;
+                case  "3":
+                    var comments = commentService.getComments(game);
+                    for(int i=0; i<comments.size() ;i++){
+                        System.out.println(comments.get(i).getPlayer()
+                                + ": "
+                                + comments.get(i).getComment()
+                                + " "
+                                + comments.get(i).getCommentedOn()
+                        );
+                    }
+                    System.out.println("\n");
+                    break;
+                case "4":
+                    System.out.print("Enter name ");
+                    var name = scanner.nextLine();
+                    System.out.print("Your comment: ");
+                    var comment = scanner.nextLine();
+                    commentService.addComment(new Comment(name,game,comment,date));
+                    break;
+                case "5":
+                    System.out.println("Average rating of this game is: " +ratingService.getAverageRating(game));
+                    System.out.println("Enter name: ");
+                    name = scanner.nextLine();
+                    System.out.println("Rate from 0-5: ");
+                    var rating = scanner.nextInt();
+                    ratingService.setRating(new Rating(name,game,rating));
+                    break;
+                case "6":
+                    running = false;
+                    break;
+            }
+        }
+    }
+
 }

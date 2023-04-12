@@ -4,7 +4,7 @@ import sk.tuke.gamestudio.entity.Rating;
 
 public interface RatingService {
     void setRating(Rating rating) throws RatingException;
-    int getAverageRating(String game) throws RatingException;
-    int getRating(String game, String player) throws RatingException;
+    int getAverageRating(String game);
+    int getRating(String game, String player);
     void reset() throws RatingException;
 }

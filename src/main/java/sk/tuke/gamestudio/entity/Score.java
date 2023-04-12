@@ -1,7 +1,17 @@
 package sk.tuke.gamestudio.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+
 import java.util.Date;
 
+@NamedQuery( name = "Score.getTopScores",
+        query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
+@NamedQuery( name = "Score.reset",
+        query = "DELETE FROM Score")
+@Entity
 public class Score {
     private String game;
 
@@ -10,6 +20,9 @@ public class Score {
     private int points;
 
     private Date playedOn;
+    @Id
+    @GeneratedValue
+    private int ident;
 
     public Score(String player, String game, int points, Date playedOn) {
         this.game = game;
@@ -18,6 +31,9 @@ public class Score {
         this.playedOn = playedOn;
     }
 
+    public Score(){}
+    public int getIdent() { return ident; }
+    public void setIdent(int ident) { this.ident = ident; }
     public String getGame() {
         return game;
     }
