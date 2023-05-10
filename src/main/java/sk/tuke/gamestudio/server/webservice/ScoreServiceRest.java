@@ -21,8 +21,6 @@ public class ScoreServiceRest {
 
     @PostMapping
     public void addScore(@RequestBody Score score) {
-        if(score.getPoints()>=0){
-            scoreService.addScore(score);
-        }
+        scoreService.addScore(score);
     }
 }

@@ -1,0 +1,158 @@
+body {
+    background-image: url("../images/background.jpg");
+    font-size: 1rem;
+    font-family: Arial, "Arial CE", "Helvetica CE", sans-serif;
+    color: #000000;
+    max-width: 30rem;
+    margin: auto;
+    padding: 1em;
+}
+
+body:before {
+    opacity: 0.8;
+}
+
+label{
+
+    width: 100px;
+    text-align: right;
+    margin-right: 5px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+label[for = "comment"]{
+    visibility: hidden;
+    width: 100px;
+    text-align: right;
+    margin-right: 5px;
+
+}
+
+label[for="rating"]{
+    visibility: hidden;
+    width: 100px;
+    text-align: right;
+    margin-right: 5px;
+}
+
+input, textarea{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 5px;
+    width: calc(80% - 105px);
+}
+
+.button{
+    display: inline-block;
+    vertical-align: middle;
+    border: 2px solid #555555;
+    color: black;
+    background-color: white;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 12px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #555555;
+    color: white;
+}
+
+.highlight{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+.highlight2{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+h1 {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+h2 {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+h3 {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover{
+    color: aqua;
+}
+
+table.scores {
+    width: 100%;
+    border: black 2px;
+}
+
+table.comments{
+    width: 100%;
+    border: black 2px;
+}
+
+.field{
+    background-color: #f2f2f2;
+}
+
+.field tr, td {
+    padding: 2px;
+}
+
+table.comments th{
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+table.scores th {
+    font-weight: bold;
+    color: #FFFFFF;
+    background-color: dimgray;
+}
+
+.my-input{
+    height: 100px;
+
+}
+
+table.scores tr:nth-child(even) {
+    background-color: lightgray
+}
+
+table.scores tr:nth-child(odd) {
+    background-color: white;
+}
+
+table.comments tr:nth-child(even){
+    background-color: lightgray
+}
+
+table.comments tr:nth-child(odd) {
+    background-color: white;
+}

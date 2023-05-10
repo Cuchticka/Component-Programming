@@ -18,12 +18,17 @@ public class Field {
 
     private boolean win;
 
+    private int score;
+    private boolean score_deduction;
+
     private FieldState state = FieldState.PLAYING;
     public int[][] tiles;
 
 
     public Field(int rowCount, int columnCount) {
         win = true;
+        score_deduction = false;
+        score = rowCount*columnCount*100;
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         tiles = new int[rowCount][columnCount];
@@ -33,6 +38,7 @@ public class Field {
 
 
     public void shuffle() {
+        score = rowCount*columnCount*100;
         int num = 1;
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < columnCount; col++) {
@@ -58,6 +64,7 @@ public class Field {
                 }
 
             }
+            score_deduction = true;
             steps = 0;
 
         }
@@ -72,22 +79,35 @@ public class Field {
     }
 
     public void SwapTiles(int row1, int col1, int row2, int col2) {
+        if(score_deduction){
+            score--;
+        }
         int temp = tiles[row1][col1];
         tiles[row1][col1] = tiles[row2][col2];
         tiles[row2][col2] = temp;
         steps++;
+        isSolved();
+    }
+
+    public int getScore() {
+        return score;
     }
 
     public boolean isSolved() {
         int num = 1;
         for (int row = 0; row < rowCount; row++) {
             for (int col = 0; col < columnCount; col++) {
-                if (row == rowCount - 1 && col == columnCount - 1) {
-                    num = 0;
+                if (row == rowCount - 1 && col == columnCount - 1 ) {
+                    if(tiles[row][col] != 0){
+                        return false;
+                    }
                 }
-                if (tiles[row][col] != num) {
-                    return false;
+                else{
+                    if (tiles[row][col] != num ) {
+                        return false;
+                    }
                 }
+
                 num++;
             }
         }
@@ -96,6 +116,9 @@ public class Field {
         return true;
     }
 
+    public void setState(FieldState state) {
+        this.state = state;
+    }
 
     public int getSteps() {
         return steps;

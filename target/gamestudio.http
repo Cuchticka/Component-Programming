@@ -1,8 +1,9 @@
-POST http://localhost:8080/rest/score
+POST http://localhost:8080/api/rating
 Content-Type: application/json
+
 {
- "game": "sliding_puzzle"
-"player": "Jozko"
-"points": 200
-"playedOn": "2023-03-25T2:01:00"
+"game": "sliding_puzzle",
+"player": "Jozko",
+"rating": -5
 }
+

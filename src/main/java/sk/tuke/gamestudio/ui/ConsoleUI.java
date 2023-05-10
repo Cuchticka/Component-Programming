@@ -17,7 +17,7 @@ public class ConsoleUI {
 
     private Scanner scanner = new Scanner(System.in);
     private int digits;
-    private boolean running;
+    public boolean running;
     public static final String game = "sliding_puzzle";
 
     @Autowired

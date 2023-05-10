@@ -10,6 +10,7 @@
           <option value="&quot;player&quot;" />
           <option value="&quot;points&quot;" />
           <option value="&quot;playedOn&quot;" />
+          <option value="&quot;game&quot;" />
         </set>
       </option>
     </inspection_tool>

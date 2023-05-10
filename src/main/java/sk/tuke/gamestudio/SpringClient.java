@@ -24,10 +24,13 @@ public class SpringClient {
 
     @Bean
     public CommandLineRunner runner(){
-        return s ->{
-            ui().menu();
-        };
+        while(ui().running){
+            return s ->{
+                ui().menu();
+            };
+        }
 
+        return s -> ui().menu();
     }
 
     @Bean
@@ -43,7 +46,7 @@ public class SpringClient {
 
     @Bean
     public ScoreService scoreService(){
-        return new ScoreServiceRestClient();
+        return new ScoreServiceJPA();
     }
 
     @Bean

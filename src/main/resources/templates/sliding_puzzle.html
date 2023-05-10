@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gamestudio</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<div style="text-align: center;">
+    <h1>Sliding Puzzle</h1>
+
+    <button type="button" class="button" onclick="window.location.href='/sliding_puzzle/new';">New game</button>
+    <br>
+
+    <span class="highlight">Game state: <span class="highlight2" th:utext="${@puzzleController.state}"/><br> </span>
+
+    <span class="highlight">Score: <span class="highlight2" th:utext="${@puzzleController.score}"/><br> </span>
+
+    <span th:utext="${@puzzleController.getHtmlField()}"style="display: inline-block; vertical-align: middle;"></span>
+
+        <br>
+        <span th:if="${@puzzleController.state == 'SOLVED'}">
+            <br>
+            <span class="highlight"> Save your score! </span>
+            <br/>
+            <br>
+            <form action="/sliding_puzzle/submitScore" method="post" autocomplete="off">
+                <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+                <button type="submit" class="button">Submit</button>
+            </form>
+        </span>
+
+
+        <!--
+       <br>
+       <span th:utext ="${@scoreService.getTopScores('sliding_puzzle')}"  />
+        -->
+   <!-- Table with best scores -->
+    <span class="highlight">Average rating: <span class="highlight2" th:utext="${@puzzleController.getAvgRating()}"/><br> </span>
+    <br>
+    <h2>Top scores</h2>
+    <table class="scores">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Played at</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="scores" type="java.util.List<sk.tuke.gamestudio.entity.Score>"*/-->
+        <tr th:each="score, it : ${scores}">
+            <td th:text="${it.index + 1}"/>
+            <td th:text="${score.player}"/>
+            <td th:text="${score.points}"/>
+            <td th:text="${#dates.format(score.playedOn, 'dd.MM.yyyy HH:mm')}"/>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h3>Comments</h3>
+    <table class="comments">
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Comment</th>
+            <th>Commented at</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--/*@thymesVar id="scores" type="java.util.List<sk.tuke.gamestudio.entity.Score>"*/-->
+        <tr th:each="commentt, it : ${comments}">
+            <td th:text="${commentt.player}"/>
+            <td th:text="${commentt.comment}"/>
+            <td th:text="${#dates.format(commentt.commentedOn, 'dd.MM.yyyy HH:mm')}"/>
+        </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <span>
+            <br>
+            <span class="highlight"> Write a cooment! </span>
+            <br/>
+            <br>
+            <form action="/sliding_puzzle/submitComment" method="post" autocomplete="off">
+                <label for="name">Name:</label>
+            <input type="text" id="Comment name" name="name">
+                <br>
+                <label for="comment">Name:</label>
+            <textarea class="my-input" id="comment" name="comment"></textarea>
+                <br>
+                <button type="submit" class="button">Submit</button>
+            </form>
+        </span>
+
+    <br>
+    <span class="highlight"> Rate the game! </span>
+    <br/>
+    <br>
+    <form action="/sliding_puzzle/submitRating" method="post" autocomplete="off">
+        <label for="name">Name:</label>
+        <input type="text" id="Rating name" name="name">
+        <br>
+
+        <button type="submit" class="button" name="rating" value="0">0</button>
+        <button type="submit" class="button" name="rating" value="1">1</button>
+        <button type="submit" class="button" name="rating" value="2">2</button>
+        <button type="submit" class="button" name="rating" value="3">3</button>
+        <button type="submit" class="button" name="rating" value="4">4</button>
+        <button type="submit" class="button" name="rating" value="5">5</button>
+
+    </form>
+</div>
+</body>
+
+</html>
