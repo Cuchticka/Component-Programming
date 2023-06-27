@@ -12,6 +12,24 @@ body:before {
     opacity: 0.8;
 }
 
+.image-container {
+    display: flex;
+}
+
+.image-container img {
+    margin-right: 10px;
+}
+
+.pole{
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pole tr, td{
+    padding: 2px;
+ }
+
 label{
 
     width: 100px;

@@ -12,32 +12,59 @@
     <button type="button" class="button" onclick="window.location.href='/sliding_puzzle/new';">New game</button>
     <br>
 
+    <div class="image-container">
+        <a href="/sliding_puzzle/level1?level=1">
+            <img src="/images/1.jpg" alt="Game Image">
+        </a>
+        <a href="/sliding_puzzle/level2?level=2">
+            <img src="/images/2.jpg" alt="Game Image">
+        </a>
+        <a href="/sliding_puzzle/level3?level=3">
+            <img src="/images/3.jpg" alt="Game Image">
+        </a>
+    </div>
+
+
+
+
+     <!--<span th:utext="${@puzzleController.getHtmlField()}"style="display: inline-block; vertical-align: middle;"></span>
+        -->
+
+
+<div th:if="${@puzzleController.getLevel() != 0}">
+    <h2 th:text="'Level ' + ${@puzzleController.getLevel()}"></h2>
+
     <span class="highlight">Game state: <span class="highlight2" th:utext="${@puzzleController.state}"/><br> </span>
+
+    <span class="highlight">Play time: <span class="highlight2" th:utext="${@puzzleController.getPlayTime()}"/><br> </span>
 
     <span class="highlight">Score: <span class="highlight2" th:utext="${@puzzleController.score}"/><br> </span>
 
-    <span th:utext="${@puzzleController.getHtmlField()}"style="display: inline-block; vertical-align: middle;"></span>
+    <span class="pole" th:utext="${@puzzleController.getHtmlField(@puzzleController.getLevel())}"></span>
 
+
+</div>
+
+    <br>
+    <span th:if="${@puzzleController.state == 'SOLVED'}">
         <br>
-        <span th:if="${@puzzleController.state == 'SOLVED'}">
-            <br>
-            <span class="highlight"> Save your score! </span>
-            <br/>
-            <br>
-            <form action="/sliding_puzzle/submitScore" method="post" autocomplete="off">
-                <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-                <button type="submit" class="button">Submit</button>
-            </form>
-        </span>
+        <span class="highlight"> Save your score! </span>
+        <br/>
+        <br>
+        <form action="/sliding_puzzle/submitScore" method="post" autocomplete="off">
+            <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+            <button type="submit" class="button">Submit</button>
+        </form>
+    </span>
 
 
-        <!--
-       <br>
-       <span th:utext ="${@scoreService.getTopScores('sliding_puzzle')}"  />
-        -->
+    <!--
+   <br>
+   <span th:utext ="${@scoreService.getTopScores('sliding_puzzle')}"  />
+    -->
    <!-- Table with best scores -->
-    <span class="highlight">Average rating: <span class="highlight2" th:utext="${@puzzleController.getAvgRating()}"/><br> </span>
+
     <br>
     <h2>Top scores</h2>
     <table class="scores">
@@ -100,6 +127,7 @@
     <br>
     <span class="highlight"> Rate the game! </span>
     <br/>
+    <span class="highlight">Average rating: <span class="highlight2" th:utext="${@puzzleController.getAvgRating()}"/><br> </span>
     <br>
     <form action="/sliding_puzzle/submitRating" method="post" autocomplete="off">
         <label for="name">Name:</label>

@@ -72,6 +72,7 @@ public class Field {
         if(win){
             SwapTiles(rowCount-1,columnCount-1,rowCount-2,rowCount-1);
             setEmptyRow(rowCount-2);
+            steps--;
         }
 
 
@@ -85,6 +86,7 @@ public class Field {
         int temp = tiles[row1][col1];
         tiles[row1][col1] = tiles[row2][col2];
         tiles[row2][col2] = temp;
+
         steps++;
         isSolved();
     }
